@@ -64,7 +64,15 @@ export async function POST(request: NextRequest) {
     const buffer = Buffer.from(bytes)
 
     // Upload to Cloudinary
-    const result = await new Promise((resolve, reject) => {
+    interface CloudinaryUploadResult {
+      secure_url: string
+      public_id: string
+      width: number
+      height: number
+      format: string
+    }
+
+    const result = await new Promise<CloudinaryUploadResult>((resolve, reject) => {
       cloudinary.uploader.upload_stream(
         {
           folder: 'badminton-photos',
@@ -72,10 +80,10 @@ export async function POST(request: NextRequest) {
         },
         (error, result) => {
           if (error) reject(error)
-          else resolve(result)
+          else resolve(result as CloudinaryUploadResult)
         }
       ).end(buffer)
-    }) as any
+    })
 
     // Save to database
     const photo = await prisma.photo.create({

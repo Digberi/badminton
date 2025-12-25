@@ -21,7 +21,6 @@
     "next-auth": "^4.24.10",
     "bcryptjs": "^2.4.3",
     "cloudinary": "^2.5.1",
-    "next-cloudinary": "^6.15.1",
     "@sentry/nextjs": "^8.43.0",
     "zod": "^3.24.1",
     "clsx": "^2.1.1"
