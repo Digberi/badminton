@@ -1,0 +1,13 @@
+name: badminton
+runtime: nodejs
+description: Infrastructure for Badminton Photo Gallery
+
+# Example Pulumi configuration
+# To use this:
+# 1. Install Pulumi: https://www.pulumi.com/docs/get-started/install/
+# 2. Configure your cloud provider (GCP, AWS, or Azure)
+# 3. Run: pulumi up
+
+# For local development without Pulumi, you can use:
+# - Local PostgreSQL database
+# - Cloudinary for image storage (free tier)
