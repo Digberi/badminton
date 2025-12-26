@@ -21,6 +21,7 @@
     "paths": {
       "@/*": ["./src/*"],
       "@UI/*": ["./src/components/*"],
+      "@routes/*": ["./src/routes/*"]
     }
   },
   "include": [
@@ -32,5 +33,5 @@
     "**/*.mts",
     "@types/**/*.d.ts"
   ],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules"],
 }

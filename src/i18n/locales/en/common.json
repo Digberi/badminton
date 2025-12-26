@@ -1,6 +1,8 @@
 {
   "nav": {
     "gallery": "Gallery",
-    "admin": "Admin"
+    "admin": "Admin",
+    "dashboard": "Dashboard",
+    "photos": "Photos"
   }
 }
