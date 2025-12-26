@@ -1,0 +1,4 @@
+{
+  "theme": { "label": "Тема", "light": "Світла", "dark": "Темна", "system": "Системна" },
+  "language": { "label": "Мова" }
+}
