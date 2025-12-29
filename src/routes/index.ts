@@ -10,7 +10,9 @@ import * as HomeRoute from "@/app/page.info";
 import * as LngRoute from "@/app/[lng]/page.info";
 import * as AdminDashboardRoute from "@/app/[lng]/(admin)/admin/page.info";
 import * as AdminPhotosRoute from "@/app/[lng]/(admin)/admin/photos/page.info";
+import * as AdminLoginRoute from "@/app/[lng]/(public)/admin/login/page.info";
 import * as GalleryRoute from "@/app/[lng]/(public)/gallery/page.info";
+import * as ApiAuthNextauthRoute from "@/app/api/auth/[...nextauth]/route.info";
 
 export const Home = makeRoute(
   "/",
@@ -40,11 +42,25 @@ export const AdminPhotos = makeRoute(
     ...AdminPhotosRoute.Route
   }
 );
+export const AdminLogin = makeRoute(
+  "/[lng]/(public)/admin/login",
+  {
+    ...defaultInfo,
+    ...AdminLoginRoute.Route
+  }
+);
 export const Gallery = makeRoute(
   "/[lng]/(public)/gallery",
   {
     ...defaultInfo,
     ...GalleryRoute.Route
+  }
+);
+export const ApiAuthNextauth = makeRoute(
+  "/api/auth/[...nextauth]",
+  {
+    ...defaultInfo,
+    ...ApiAuthNextauthRoute.Route
   }
 );
 

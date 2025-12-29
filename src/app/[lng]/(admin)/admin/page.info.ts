@@ -10,5 +10,6 @@ export const Route = {
     title: { ns: "common", key: "nav.dashboard" },
     menuTitle: { ns: "common", key: "nav.dashboard" },
     order: 0,
+    requiredRoles: ["ADMIN"],
   },
 } as const;

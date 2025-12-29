@@ -6,8 +6,7 @@ import { Route } from "./page.info";
 export default async function GalleryPage({ params }: RouteInfoToContext<typeof Route>) {
   const { lng } = await params;
 
-  const i18n = await serverTranslation(lng, ["gallery", "common"]);
-  const t = i18n.getFixedT(lng);
+  const {t} = await serverTranslation(lng, ["gallery", "common"]);
 
   const title = resolveMetaText(t, Route.meta?.title, "Gallery");
 

@@ -1,8 +1,21 @@
 interface Resources {
+  "auth": {
+    "adminLogin": {
+      "continueWithGoogle": "Continue with Google",
+      "hint": "Only admins can access the admin area.",
+      "title": "Admin login"
+    },
+    "errors": {
+      "forbidden": "Your account is not an admin.",
+      "unauthorized": "Please sign in to continue."
+    }
+  },
   "common": {
     "nav": {
       "admin": "Admin",
-      "gallery": "Gallery"
+      "dashboard": "Dashboard",
+      "gallery": "Gallery",
+      "photos": "Photos"
     }
   },
   "gallery": {

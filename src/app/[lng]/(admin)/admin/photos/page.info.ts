@@ -8,7 +8,8 @@ export const Route = {
   }),
   meta: {
     title: { ns: "common", key: "nav.photos" },
-    menuTitle: { ns: "common", key: "nav.phots" },
+    menuTitle: { ns: "common", key: "nav.photos" },
     order: 10,
-  }
-} as const
+    requiredRoles: ["ADMIN"],
+  },
+} as const;
