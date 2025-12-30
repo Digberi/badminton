@@ -8,6 +8,15 @@ interface Resources {
     "errors": {
       "forbidden": "Your account is not an admin.",
       "unauthorized": "Please sign in to continue."
+    },
+    "user": {
+      "adminPanel": "Admin panel",
+      "role": {
+        "admin": "Admin",
+        "user": "User"
+      },
+      "signIn": "Sign in",
+      "signOut": "Sign out"
     }
   },
   "common": {

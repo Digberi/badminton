@@ -1,9 +1,9 @@
-// file: src/app/[lng]/(public)/layout.tsx
 import type { Language } from "@/i18n/settings";
 import { languages } from "@/i18n/settings";
 import Link from "next/link";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { AppPublicNav } from "@/components/public/app-public-nav";
+import { UserNav } from "@/components/auth/user-nav";
 
 export default async function PublicLayout({
                                              children,
@@ -27,7 +27,6 @@ export default async function PublicLayout({
           </div>
 
           <div className="flex items-center gap-2">
-            {/* languages (desktop only to keep header clean on mobile) */}
             <nav className="hidden items-center gap-2 text-sm text-muted-foreground md:flex">
               {languages.map((l) => (
                 <Link
@@ -40,13 +39,7 @@ export default async function PublicLayout({
               ))}
             </nav>
 
-            {/* Admin link (desktop). On mobile it’s available inside the sheet */}
-            <Link
-              href={`/${lng}/admin`}
-              className="hidden text-sm text-muted-foreground hover:text-foreground md:inline-flex"
-            >
-              Admin
-            </Link>
+            <UserNav lng={lng} />
 
             <ThemeToggle />
           </div>
