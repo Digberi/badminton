@@ -20,6 +20,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import {useRouter} from "next/navigation";
 
 function initials(name?: string | null, email?: string | null) {
   const src = (name ?? "").trim() || (email ?? "").trim();
@@ -31,6 +32,7 @@ function initials(name?: string | null, email?: string | null) {
 }
 
 export function UserNav({ lng, className }: { lng: Language; className?: string }) {
+  const router = useRouter();
   const { data: session, status } = useSession();
   const { t } = useTranslation({ lng, ns: "auth" });
 
@@ -57,7 +59,9 @@ export function UserNav({ lng, className }: { lng: Language; className?: string 
   const email = user.email ?? undefined;
 
   async function onSignOut() {
-    await signOut({ callbackUrl: `/${lng}/gallery` });
+    await signOut({ redirect: false }); // session удалится, useSession обновится  [oai_citation:1‡NextAuth](https://next-auth.js.org/getting-started/client)
+    router.push(`/${lng}/gallery`);
+    router.refresh();
   }
 
   return (
