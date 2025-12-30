@@ -17,5 +17,23 @@ services:
       timeout: 3s
       retries: 20
 
+  localstack:
+    image: localstack/localstack:latest
+    container_name: photo-app-localstack
+    ports:
+      # лучше привязать к localhost, чтобы не торчало наружу
+      - "127.0.0.1:4566:4566"
+    environment:
+      - SERVICES=s3
+      - DEBUG=1
+      - AWS_DEFAULT_REGION=us-east-1
+      # прокинем bucket name в init hook
+      - S3_PHOTOS_BUCKET=photo-app-photos
+    volumes:
+      # init hooks (READY stage)
+      - ./localstack/init/ready.d:/etc/localstack/init/ready.d
+      - localstack_data:/var/lib/localstack
+
 volumes:
   photo_app_pgdata:
+  localstack_data:
