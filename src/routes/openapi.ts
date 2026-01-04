@@ -5,6 +5,8 @@ import {
 import * as yaml from "yaml";
 import * as fs from "fs";
 
+import * as ApiSentryExampleApi from "../../src/app/api/sentry-example-api/route.info";
+
 import * as ApiPhotos from "../../src/app/api/photos/route.info";
 
 import * as ApiAdminPhotos from "../../src/app/api/admin/photos/route.info";
@@ -18,6 +20,24 @@ import * as ApiAdminPhotosId from "../../src/app/api/admin/photos/[id]/route.inf
 
 const registry = new OpenAPIRegistry();
 
+registry.registerPath({
+  method: "get",
+  path: "/api/sentry-example-api",
+  summary: "",
+  request: {
+  params: ApiSentryExampleApi.Route.params,
+  },
+  responses: {
+    200: {
+      description: "Success",
+      content: {
+        "application/json": {
+          schema: ApiSentryExampleApi.GET.result,
+        },
+      },
+    },
+  },
+});
 registry.registerPath({
   method: "get",
   path: "/api/photos",

@@ -5,7 +5,7 @@ Derived from: https://www.flightcontrol.dev/blog/fix-nextjs-routing-to-have-full
 */
 import { z } from "zod";
 import queryString from "query-string";
-import Link from "next/link";
+import { Link } from "react-transition-progress/next";
 import {FlatNamespace, KeyPrefix} from "i18next";
 import {FallbackNs} from "react-i18next";
 

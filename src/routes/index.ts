@@ -12,12 +12,14 @@ import * as AdminDashboardRoute from "@/app/[lng]/(admin)/admin/page.info";
 import * as AdminPhotosRoute from "@/app/[lng]/(admin)/admin/photos/page.info";
 import * as AdminLoginRoute from "@/app/[lng]/(public)/admin/login/page.info";
 import * as GalleryRoute from "@/app/[lng]/(public)/gallery/page.info";
+import * as LngSentryExamplePageRoute from "@/app/[lng]/sentry-example-page/page.info";
 import * as ApiAdminPhotosRoute from "@/app/api/admin/photos/route.info";
 import * as ApiAdminPhotosIdRoute from "@/app/api/admin/photos/[id]/route.info";
 import * as ApiAdminPhotosConfirmRoute from "@/app/api/admin/photos/confirm/route.info";
 import * as ApiAdminPhotosCreatePresignedRoute from "@/app/api/admin/photos/create-presigned/route.info";
 import * as ApiAuthNextauthRoute from "@/app/api/auth/[...nextauth]/route.info";
 import * as ApiPhotosRoute from "@/app/api/photos/route.info";
+import * as ApiSentryExampleApiRoute from "@/app/api/sentry-example-api/route.info";
 
 export const Home = makeRoute(
   "/",
@@ -59,6 +61,13 @@ export const Gallery = makeRoute(
   {
     ...defaultInfo,
     ...GalleryRoute.Route
+  }
+);
+export const LngSentryExamplePage = makeRoute(
+  "/[lng]/sentry-example-page",
+  {
+    ...defaultInfo,
+    ...LngSentryExamplePageRoute.Route
   }
 );
 export const ApiAuthNextauth = makeRoute(
@@ -108,4 +117,12 @@ export const getApiPhotos = makeGetRoute(
     ...ApiPhotosRoute.Route
   },
   ApiPhotosRoute.GET
+);
+export const getApiSentryExampleApi = makeGetRoute(
+  "/api/sentry-example-api",
+  {
+    ...defaultInfo,
+    ...ApiSentryExampleApiRoute.Route
+  },
+  ApiSentryExampleApiRoute.GET
 );

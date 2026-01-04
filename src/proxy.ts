@@ -1,4 +1,3 @@
-// file: src/proxy.ts
 import type { NextFetchEvent, NextRequest } from "next/server";
 
 import { stackProxies } from "@/middlewares/stacker";
@@ -13,6 +12,6 @@ export function proxy(request: NextRequest, event: NextFetchEvent) {
 
 export const config = {
   matcher: [
-    "/((?!api|_next/static|_next/image|favicon.ico|robots.txt|sitemap.xml|.*\\..*).*)",
+    "/((?!api|monitoring|_next/static|_next/image|favicon.ico|robots.txt|sitemap.xml|.*\\..*).*)",
   ],
 };
