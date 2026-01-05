@@ -9,10 +9,19 @@ const defaultInfo = {
 import * as HomeRoute from "@/app/page.info";
 import * as LngRoute from "@/app/[lng]/page.info";
 import * as AdminDashboardRoute from "@/app/[lng]/(admin)/admin/page.info";
+import * as AdminAlbumsRoute from "@/app/[lng]/(admin)/admin/albums/page.info";
+import * as AdminAlbumDetailRoute from "@/app/[lng]/(admin)/admin/albums/[id]/page.info";
 import * as AdminPhotosRoute from "@/app/[lng]/(admin)/admin/photos/page.info";
 import * as AdminLoginRoute from "@/app/[lng]/(public)/admin/login/page.info";
 import * as GalleryRoute from "@/app/[lng]/(public)/gallery/page.info";
+import * as GalleryAlbumRoute from "@/app/[lng]/(public)/gallery/[slug]/page.info";
 import * as LngSentryExamplePageRoute from "@/app/[lng]/sentry-example-page/page.info";
+import * as ApiAdminAlbumsRoute from "@/app/api/admin/albums/route.info";
+import * as ApiAdminAlbumsIdRoute from "@/app/api/admin/albums/[id]/route.info";
+import * as ApiAdminAlbumsIdCoverRoute from "@/app/api/admin/albums/[id]/cover/route.info";
+import * as ApiAdminAlbumsIdPhotosRoute from "@/app/api/admin/albums/[id]/photos/route.info";
+import * as ApiAdminAlbumsIdPhotosPhotoIdRoute from "@/app/api/admin/albums/[id]/photos/[photoId]/route.info";
+import * as ApiAdminAlbumsIdPhotosReorderRoute from "@/app/api/admin/albums/[id]/photos/reorder/route.info";
 import * as ApiAdminPhotosRoute from "@/app/api/admin/photos/route.info";
 import * as ApiAdminPhotosIdRoute from "@/app/api/admin/photos/[id]/route.info";
 import * as ApiAdminPhotosConfirmRoute from "@/app/api/admin/photos/confirm/route.info";
@@ -42,6 +51,20 @@ export const AdminDashboard = makeRoute(
     ...AdminDashboardRoute.Route
   }
 );
+export const AdminAlbums = makeRoute(
+  "/[lng]/(admin)/admin/albums",
+  {
+    ...defaultInfo,
+    ...AdminAlbumsRoute.Route
+  }
+);
+export const AdminAlbumDetail = makeRoute(
+  "/[lng]/(admin)/admin/albums/[id]",
+  {
+    ...defaultInfo,
+    ...AdminAlbumDetailRoute.Route
+  }
+);
 export const AdminPhotos = makeRoute(
   "/[lng]/(admin)/admin/photos",
   {
@@ -63,11 +86,32 @@ export const Gallery = makeRoute(
     ...GalleryRoute.Route
   }
 );
+export const GalleryAlbum = makeRoute(
+  "/[lng]/(public)/gallery/[slug]",
+  {
+    ...defaultInfo,
+    ...GalleryAlbumRoute.Route
+  }
+);
 export const LngSentryExamplePage = makeRoute(
   "/[lng]/sentry-example-page",
   {
     ...defaultInfo,
     ...LngSentryExamplePageRoute.Route
+  }
+);
+export const ApiAdminAlbumsIdCover = makeRoute(
+  "/api/admin/albums/[id]/cover",
+  {
+    ...defaultInfo,
+    ...ApiAdminAlbumsIdCoverRoute.Route
+  }
+);
+export const ApiAdminAlbumsIdPhotosReorder = makeRoute(
+  "/api/admin/albums/[id]/photos/reorder",
+  {
+    ...defaultInfo,
+    ...ApiAdminAlbumsIdPhotosReorderRoute.Route
   }
 );
 export const ApiAuthNextauth = makeRoute(
@@ -78,6 +122,54 @@ export const ApiAuthNextauth = makeRoute(
   }
 );
 
+export const getApiAdminAlbums = makeGetRoute(
+  "/api/admin/albums",
+  {
+    ...defaultInfo,
+    ...ApiAdminAlbumsRoute.Route
+  },
+  ApiAdminAlbumsRoute.GET
+);
+export const postApiAdminAlbums = makePostRoute(
+  "/api/admin/albums",
+  {
+    ...defaultInfo,
+    ...ApiAdminAlbumsRoute.Route
+  },
+  ApiAdminAlbumsRoute.POST
+);
+export const deleteApiAdminAlbumsId = makeDeleteRoute(
+  "/api/admin/albums/[id]",
+  {
+    ...defaultInfo,
+    ...ApiAdminAlbumsIdRoute.Route
+  },
+  
+);
+export const getApiAdminAlbumsIdPhotos = makeGetRoute(
+  "/api/admin/albums/[id]/photos",
+  {
+    ...defaultInfo,
+    ...ApiAdminAlbumsIdPhotosRoute.Route
+  },
+  ApiAdminAlbumsIdPhotosRoute.GET
+);
+export const postApiAdminAlbumsIdPhotos = makePostRoute(
+  "/api/admin/albums/[id]/photos",
+  {
+    ...defaultInfo,
+    ...ApiAdminAlbumsIdPhotosRoute.Route
+  },
+  ApiAdminAlbumsIdPhotosRoute.POST
+);
+export const deleteApiAdminAlbumsIdPhotosPhotoId = makeDeleteRoute(
+  "/api/admin/albums/[id]/photos/[photoId]",
+  {
+    ...defaultInfo,
+    ...ApiAdminAlbumsIdPhotosPhotoIdRoute.Route
+  },
+  
+);
 export const getApiAdminPhotos = makeGetRoute(
   "/api/admin/photos",
   {

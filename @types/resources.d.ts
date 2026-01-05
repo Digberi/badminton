@@ -1,4 +1,10 @@
 interface Resources {
+  "albums": {
+    "albumEmpty": "No photos in this album yet.",
+    "latestTitle": "Latest photos",
+    "listTitle": "Albums",
+    "noAlbums": "No albums yet."
+  },
   "auth": {
     "adminLogin": {
       "continueWithGoogle": "Continue with Google",
@@ -22,6 +28,7 @@ interface Resources {
   "common": {
     "nav": {
       "admin": "Admin",
+      "albums": "Albums",
       "dashboard": "Dashboard",
       "gallery": "Gallery",
       "photos": "Photos"

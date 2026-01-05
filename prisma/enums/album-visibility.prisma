@@ -1,0 +1,5 @@
+enum AlbumVisibility {
+  PUBLIC
+  UNLISTED
+  PRIVATE
+}

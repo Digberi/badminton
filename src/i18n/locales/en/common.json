@@ -3,6 +3,7 @@
     "gallery": "Gallery",
     "admin": "Admin",
     "dashboard": "Dashboard",
-    "photos": "Photos"
+    "photos": "Photos",
+    "albums": "Albums"
   }
 }

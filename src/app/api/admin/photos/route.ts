@@ -51,6 +51,12 @@ export async function GET(req: NextRequest) {
       contentType: true,
       size: true,
       createdAt: true,
+      albumPhotos: {
+        where: { album: { deletedAt: null } },
+        select: {
+          album: { select: { id: true, title: true, slug: true } },
+        },
+      },
     },
   });
 
@@ -67,6 +73,7 @@ export async function GET(req: NextRequest) {
       contentType: p.contentType,
       size: p.size,
       createdAt: p.createdAt.toISOString(),
+      albums: p.albumPhotos.map((ap) => ap.album),
     })),
     nextCursor,
   });

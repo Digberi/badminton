@@ -1,0 +1,41 @@
+model Album {
+  id          String          @id @default(cuid())
+  slug        String          @unique
+  title       String
+  description String?
+  visibility  AlbumVisibility @default(PUBLIC)
+
+  // ручная сортировка альбомов (в админке можно менять)
+  order Int @default(0)
+
+  // cover photo
+  coverPhotoId String?
+  coverPhoto   Photo?  @relation("AlbumCover", fields: [coverPhotoId], references: [id], onDelete: SetNull)
+
+  createdById String?
+  createdBy   User?   @relation("UserAlbums", fields: [createdById], references: [id], onDelete: SetNull)
+
+  photos AlbumPhoto[]
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+
+  @@index([visibility, order])
+  @@index([deletedAt])
+}
+
+model AlbumPhoto {
+  albumId  String
+  photoId  String
+  position Int
+
+  album Album @relation(fields: [albumId], references: [id], onDelete: Cascade)
+  photo Photo @relation(fields: [photoId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@id([albumId, photoId])
+  @@index([albumId, position])
+  @@index([photoId])
+}

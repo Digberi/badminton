@@ -12,7 +12,9 @@ const BodySchema = z.object({
   fileName: z.string().min(1).max(255),
   contentType: z.enum(ALLOWED_MIME_TYPES),
   size: z.number().int().positive().max(MAX_FILE_SIZE_BYTES),
+  albumId: z.string().min(1).optional(), // ✅ NEW
 });
+
 
 export async function POST(req: NextRequest) {
   const admin = await requireAdmin(req);
@@ -29,21 +31,44 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  const { fileName, contentType, size } = parsed.data;
+  const { fileName, contentType, size, albumId } = parsed.data;
+
+  if (albumId) {
+    const album = await prisma.album.findUnique({ where: { id: albumId } });
+    if (!album || album.deletedAt) {
+      return NextResponse.json({ error: "ALBUM_NOT_FOUND" }, { status: 400 });
+    }
+  }
 
   const key = makePhotoKey(contentType);
   const originalName = sanitizeOriginalName(fileName);
 
-  const photo = await prisma.photo.create({
-    data: {
-      key,
-      contentType,
-      size,
-      originalName,
-      status: "PENDING",
-      createdById: admin.userId || null,
-    },
-    select: { id: true, key: true, contentType: true },
+  const photo = await prisma.$transaction(async (tx) => {
+    const created = await tx.photo.create({
+      data: {
+        key,
+        contentType,
+        size,
+        originalName,
+        status: "PENDING",
+        createdById: admin.userId || null,
+      },
+      select: { id: true, key: true, contentType: true },
+    });
+
+    if (albumId) {
+      const max = await tx.albumPhoto.aggregate({
+        where: { albumId },
+        _max: { position: true },
+      });
+      const pos = (max._max.position ?? -1) + 1;
+
+      await tx.albumPhoto.create({
+        data: { albumId, photoId: created.id, position: pos },
+      });
+    }
+
+    return created;
   });
 
   const presign = await createPresignedPutUrl({

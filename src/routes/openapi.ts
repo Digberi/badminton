@@ -11,11 +11,19 @@ import * as ApiPhotos from "../../src/app/api/photos/route.info";
 
 import * as ApiAdminPhotos from "../../src/app/api/admin/photos/route.info";
 
+import * as ApiAdminAlbums from "../../src/app/api/admin/albums/route.info";
+
 import * as ApiAdminPhotosCreatePresigned from "../../src/app/api/admin/photos/create-presigned/route.info";
 
 import * as ApiAdminPhotosConfirm from "../../src/app/api/admin/photos/confirm/route.info";
 
 import * as ApiAdminPhotosId from "../../src/app/api/admin/photos/[id]/route.info";
+
+import * as ApiAdminAlbumsId from "../../src/app/api/admin/albums/[id]/route.info";
+
+import * as ApiAdminAlbumsIdPhotos from "../../src/app/api/admin/albums/[id]/photos/route.info";
+
+import * as ApiAdminAlbumsIdPhotosPhotoId from "../../src/app/api/admin/albums/[id]/photos/[photoId]/route.info";
 
 
 const registry = new OpenAPIRegistry();
@@ -69,6 +77,50 @@ registry.registerPath({
       content: {
         "application/json": {
           schema: ApiAdminPhotos.GET.result,
+        },
+      },
+    },
+  },
+});
+registry.registerPath({
+  method: "get",
+  path: "/api/admin/albums",
+  summary: "",
+  request: {
+  params: ApiAdminAlbums.Route.params,
+  },
+  responses: {
+    200: {
+      description: "Success",
+      content: {
+        "application/json": {
+          schema: ApiAdminAlbums.GET.result,
+        },
+      },
+    },
+  },
+});
+registry.registerPath({
+  method: "post",
+  path: "/api/admin/albums",
+  summary: "",
+  request: {
+  params: ApiAdminAlbums.Route.params,
+  body: {
+      required: true,
+      content: {
+        "application/json": {
+          schema: ApiAdminAlbums.POST.body,
+        },
+      },
+    },
+  },
+  responses: {
+    200: {
+      description: "Success",
+      content: {
+        "application/json": {
+          schema: ApiAdminAlbums.POST.result,
         },
       },
     },
@@ -138,6 +190,84 @@ registry.registerPath({
       content: {
         "application/json": {
           schema: ApiAdminPhotosId.DELETE.result,
+        },
+      },
+    },
+  },
+});
+registry.registerPath({
+  method: "delete",
+  path: "/api/admin/albums/{id}",
+  summary: "",
+  request: {
+  },
+  responses: {
+    200: {
+      description: "Success",
+      content: {
+        "application/json": {
+          schema: ApiAdminAlbumsId.DELETE.result,
+        },
+      },
+    },
+  },
+});
+registry.registerPath({
+  method: "get",
+  path: "/api/admin/albums/{id}/photos",
+  summary: "",
+  request: {
+  params: ApiAdminAlbumsIdPhotos.Route.params,
+  },
+  responses: {
+    200: {
+      description: "Success",
+      content: {
+        "application/json": {
+          schema: ApiAdminAlbumsIdPhotos.GET.result,
+        },
+      },
+    },
+  },
+});
+registry.registerPath({
+  method: "post",
+  path: "/api/admin/albums/{id}/photos",
+  summary: "",
+  request: {
+  params: ApiAdminAlbumsIdPhotos.Route.params,
+  body: {
+      required: true,
+      content: {
+        "application/json": {
+          schema: ApiAdminAlbumsIdPhotos.POST.body,
+        },
+      },
+    },
+  },
+  responses: {
+    200: {
+      description: "Success",
+      content: {
+        "application/json": {
+          schema: ApiAdminAlbumsIdPhotos.POST.result,
+        },
+      },
+    },
+  },
+});
+registry.registerPath({
+  method: "delete",
+  path: "/api/admin/albums/{id]/photos/[photoId}",
+  summary: "",
+  request: {
+  },
+  responses: {
+    200: {
+      description: "Success",
+      content: {
+        "application/json": {
+          schema: ApiAdminAlbumsIdPhotosPhotoId.DELETE.result,
         },
       },
     },
