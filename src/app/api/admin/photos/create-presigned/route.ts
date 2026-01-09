@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { MAX_FILE_SIZE_BYTES, ALLOWED_MIME_TYPES } from "@/server/photos/constants";
+import { MAX_FILE_SIZE_BYTES, ALLOWED_MIME_TYPES } from "@/lib/photos/constants";
 import { makePhotoKey, sanitizeOriginalName } from "@/server/photos/keys";
 import { createPresignedPutUrl, photoCdnUrl } from "@/server/aws/s3";
 import { requireAdmin } from "@/server/auth/require-admin";

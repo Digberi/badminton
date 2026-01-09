@@ -23,6 +23,8 @@ import * as ApiAdminAlbumsId from "../../src/app/api/admin/albums/[id]/route.inf
 
 import * as ApiAdminAlbumsIdPhotos from "../../src/app/api/admin/albums/[id]/photos/route.info";
 
+import * as ApiAdminAlbumsIdCover from "../../src/app/api/admin/albums/[id]/cover/route.info";
+
 import * as ApiAdminAlbumsIdPhotosPhotoId from "../../src/app/api/admin/albums/[id]/photos/[photoId]/route.info";
 
 
@@ -213,6 +215,32 @@ registry.registerPath({
   },
 });
 registry.registerPath({
+  method: "put",
+  path: "/api/admin/albums/{id}",
+  summary: "",
+  request: {
+  params: ApiAdminAlbumsId.Route.params,
+  body: {
+      required: true,
+      content: {
+        "application/json": {
+          schema: ApiAdminAlbumsId.PUT.body,
+        },
+      },
+    },
+  },
+  responses: {
+    200: {
+      description: "Success",
+      content: {
+        "application/json": {
+          schema: ApiAdminAlbumsId.PUT.result,
+        },
+      },
+    },
+  },
+});
+registry.registerPath({
   method: "get",
   path: "/api/admin/albums/{id}/photos",
   summary: "",
@@ -251,6 +279,32 @@ registry.registerPath({
       content: {
         "application/json": {
           schema: ApiAdminAlbumsIdPhotos.POST.result,
+        },
+      },
+    },
+  },
+});
+registry.registerPath({
+  method: "put",
+  path: "/api/admin/albums/{id}/cover",
+  summary: "",
+  request: {
+  params: ApiAdminAlbumsIdCover.Route.params,
+  body: {
+      required: true,
+      content: {
+        "application/json": {
+          schema: ApiAdminAlbumsIdCover.PUT.body,
+        },
+      },
+    },
+  },
+  responses: {
+    200: {
+      description: "Success",
+      content: {
+        "application/json": {
+          schema: ApiAdminAlbumsIdCover.PUT.result,
         },
       },
     },

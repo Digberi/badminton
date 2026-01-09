@@ -4,7 +4,7 @@ import { z } from "zod";
 import { requireAdmin } from "@/server/auth/require-admin";
 import { prisma } from "@/server/db/prisma";
 import { headObject, photoCdnUrl } from "@/server/aws/s3";
-import { MAX_FILE_SIZE_BYTES, ALLOWED_MIME_TYPES } from "@/server/photos/constants";
+import { MAX_FILE_SIZE_BYTES, ALLOWED_MIME_TYPES } from "@/lib/photos/constants";
 
 export const runtime = "nodejs";
 

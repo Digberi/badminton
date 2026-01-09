@@ -8,8 +8,8 @@ import {
   DeleteObjectCommand,
 } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
+import {IMMUTABLE_CACHE_CONTROL} from "@/lib/photos/constants";
 
-import { IMMUTABLE_CACHE_CONTROL } from "@/server/photos/constants";
 
 let _client: S3Client | null = null;
 

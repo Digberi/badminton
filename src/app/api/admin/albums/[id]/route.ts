@@ -1,21 +1,17 @@
-import { NextRequest, NextResponse } from "next/server";
-import { z } from "zod";
+import {NextRequest, NextResponse} from "next/server";
+
+import type { RouteInfoToDeleteRoute, RouteInfoToPutRoute } from "@/lib/routes/next-route-types";
 
 import { prisma } from "@/server/db/prisma";
 import { requireAdmin } from "@/server/auth/require-admin";
 import { ensureUniqueAlbumSlug, normalizeSlug } from "@/server/albums/slug";
+import { DELETE as DELETEInfo, PUT as PUTInfo, Route } from "./route.info";
 
 export const runtime = "nodejs";
 
-const UpdateSchema = z.object({
-  title: z.string().min(1).max(120).optional(),
-  slug: z.string().optional(),
-  description: z.string().max(2000).optional(),
-  visibility: z.enum(["PUBLIC", "UNLISTED", "PRIVATE"]).optional(),
-  order: z.number().int().min(0).max(9999).optional(),
-});
+const UpdateSchema = PUTInfo.body;
 
-export async function PUT(req: NextRequest, ctx: { params: Promise<{ id: string }> }) {
+export const PUT: RouteInfoToPutRoute<typeof PUTInfo, typeof Route> = async (req, ctx) => {
   const admin = await requireAdmin(req);
   if (!admin.ok) return NextResponse.json({ error: admin.error }, { status: admin.status });
 
@@ -40,17 +36,18 @@ export async function PUT(req: NextRequest, ctx: { params: Promise<{ id: string 
     where: { id },
     data: {
       title: parsed.data.title ?? undefined,
-      description: parsed.data.description !== undefined ? (parsed.data.description.trim() || null) : undefined,
+      description: parsed.data.description != undefined ? (parsed.data.description.trim() || null) : undefined,
       visibility: parsed.data.visibility ?? undefined,
       order: parsed.data.order ?? undefined,
       slug,
+      coverPhotoId: parsed.data.coverPhotoId ?? undefined,
     },
   });
 
   return NextResponse.json({ ok: true as const });
 }
 
-export async function DELETE(req: NextRequest, ctx: { params: Promise<{ id: string }> }) {
+export const DELETE : RouteInfoToDeleteRoute<typeof DELETEInfo, typeof Route> = async (req, ctx) => {
   const admin = await requireAdmin(req);
   if (!admin.ok) return NextResponse.json({ error: admin.error }, { status: admin.status });
 
@@ -65,4 +62,4 @@ export async function DELETE(req: NextRequest, ctx: { params: Promise<{ id: stri
   });
 
   return NextResponse.json({ ok: true as const });
-}
+};

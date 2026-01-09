@@ -1,22 +1,18 @@
-import { NextRequest, NextResponse } from "next/server";
-import { z } from "zod";
+import {NextRequest, NextResponse} from "next/server";
+
+import type { RouteInfoToGetRoute, RouteInfoToPostRoute } from "@/lib/routes/next-route-types";
 
 import { prisma } from "@/server/db/prisma";
 import { requireAdmin } from "@/server/auth/require-admin";
 import { ensureUniqueAlbumSlug, normalizeSlug } from "@/server/albums/slug";
 import { photoCdnUrl } from "@/server/aws/s3";
+import { GET as GETInfo, POST as POSTInfo, Route } from "./route.info";
 
 export const runtime = "nodejs";
 
-const CreateSchema = z.object({
-  title: z.string().min(1).max(120),
-  slug: z.string().optional(),
-  description: z.string().max(2000).optional(),
-  visibility: z.enum(["PUBLIC", "UNLISTED", "PRIVATE"]).default("PUBLIC"),
-  order: z.number().int().min(0).max(9999).optional(),
-});
+const CreateSchema = POSTInfo.body;
 
-export async function GET(req: NextRequest) {
+export const GET: RouteInfoToGetRoute<typeof GETInfo, typeof Route> = async (req) => {
   const admin = await requireAdmin(req);
   if (!admin.ok) return NextResponse.json({ error: admin.error }, { status: admin.status });
 
@@ -54,13 +50,14 @@ export async function GET(req: NextRequest) {
         visibility: a.visibility,
         order: a.order,
         coverUrl: coverKey ? photoCdnUrl(coverKey) : null,
-        count: a._count.photos,
+        photosCount: a._count.photos,
         createdAt: a.createdAt.toISOString(),
         updatedAt: a.updatedAt.toISOString(),
+        deletedAt: a.deletedAt?.toISOString() ?? null,
       };
     }),
   });
-}
+};
 
 export async function POST(req: NextRequest) {
   const admin = await requireAdmin(req);
@@ -76,13 +73,19 @@ export async function POST(req: NextRequest) {
   const rawSlug = parsed.data.slug ? normalizeSlug(parsed.data.slug) : "";
   const slug = await ensureUniqueAlbumSlug(rawSlug || title);
 
+  const maxOrder = await prisma.album.aggregate({
+    _max: { order: true },
+    where: { deletedAt: null },
+  });
+  const nextOrder = (maxOrder._max.order ?? 0) + 1;
+
   const album = await prisma.album.create({
     data: {
       title,
       slug,
       description: description?.trim() || null,
       visibility,
-      order: order ?? 0,
+      order: order ?? nextOrder,
       createdById: admin.userId || null,
     },
     select: { id: true, slug: true },

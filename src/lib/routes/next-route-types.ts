@@ -26,6 +26,10 @@ export type RouteInfoToContext<
 }>;
 //#endregion RouteInfoToLayout
 
+type InfoWithError<Info extends z.output<typeof z.ZodSchema>> = Info | {
+  error: any;
+};
+
 type NextRequestWithBody<Body extends z.ZodSchema> = Omit<NextRequest, "json"> & {
   json(): Promise<z.output<Body>>;
 };
@@ -36,7 +40,7 @@ export type RouteInfoToGetRoute<
 > = (
   req: NextRequest,
   context: RouteInfoToContext<RInfo>,
-) => Promise<NextResponse<z.output<Info["result"]>>>;
+) => Promise<NextResponse<InfoWithError<z.output<Info["result"]>>>>;
 
 export type RouteInfoToPostRoute<
   Info extends PostInfo<z.ZodSchema, z.ZodSchema> = PostInfo<z.ZodSchema, z.ZodSchema>,
@@ -44,7 +48,7 @@ export type RouteInfoToPostRoute<
 > = (
   req: NextRequestWithBody<Info["body"]>,
   context: RouteInfoToContext<RInfo>,
-) => Promise<NextResponse<z.output<Info["result"]>>>;
+) => Promise<NextResponse<InfoWithError<z.output<Info["result"]>>>>;
 
 export type RouteInfoToPutRoute<
   Info extends PutInfo<z.ZodSchema, z.ZodSchema> = PutInfo<z.ZodSchema, z.ZodSchema>,
@@ -52,7 +56,7 @@ export type RouteInfoToPutRoute<
 > = (
   req: NextRequestWithBody<Info["body"]>,
   context: RouteInfoToContext<RInfo>,
-) => Promise<NextResponse<z.output<Info["result"]>>>;
+) => Promise<NextResponse<InfoWithError<z.output<Info["result"]>>>>;
 
 export type RouteInfoToDeleteRoute<
   Info extends DeleteInfo<z.ZodSchema> = DeleteInfo<z.ZodSchema>,
@@ -60,7 +64,7 @@ export type RouteInfoToDeleteRoute<
 > = (
   req: NextRequest,
   context: RouteInfoToContext<RInfo>,
-) => Promise<NextResponse<z.output<Info["result"]>>>;
+) => Promise<NextResponse<InfoWithError<z.output<Info["result"]>>>>;
 
 //#region Tools
 type OptionalFields<T extends object, F extends keyof T> = Omit<T, F> & Partial<Pick<T, F>>;

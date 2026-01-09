@@ -1,16 +1,16 @@
-import { NextRequest, NextResponse } from "next/server";
-import { z } from "zod";
+import { NextResponse } from "next/server";
+
+import type { RouteInfoToPutRoute } from "@/lib/routes/next-route-types";
 
 import { prisma } from "@/server/db/prisma";
 import { requireAdmin } from "@/server/auth/require-admin";
+import { PUT as PUTInfo, Route } from "./route.info";
 
 export const runtime = "nodejs";
 
-const BodySchema = z.object({
-  photoId: z.string().min(1).nullable(),
-});
+const BodySchema = PUTInfo.body;
 
-export async function PUT(req: NextRequest, ctx: { params: Promise<{ id: string }> }) {
+export const PUT: RouteInfoToPutRoute<typeof PUTInfo, typeof Route> = async (req, ctx) => {
   const admin = await requireAdmin(req);
   if (!admin.ok) return NextResponse.json({ error: admin.error }, { status: admin.status });
 
@@ -40,4 +40,4 @@ export async function PUT(req: NextRequest, ctx: { params: Promise<{ id: string 
   });
 
   return NextResponse.json({ ok: true as const });
-}
+};

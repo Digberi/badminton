@@ -1,5 +1,5 @@
 import { randomUUID } from "node:crypto";
-import type { AllowedMimeType } from "./constants";
+import {AllowedMimeType} from "@/lib/photos/constants";
 
 const extByMime: Record<AllowedMimeType, string> = {
   "image/jpeg": "jpg",
